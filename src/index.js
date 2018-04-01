@@ -4,6 +4,7 @@ import 'aframe-particle-system-component';
 import 'babel-polyfill';
 import { Entity, Scene } from 'aframe-react';
 import React from 'react';
+
 import ReactDOM from 'react-dom';
 
 class App extends React.Component {
@@ -11,9 +12,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       trophiesFused: new Set(),
-      unfusedTrophies: ['braintree', 'crowdfave'],
+      unfusedTrophies: ['braintree',],
       position: 2,
       narrationInProgress: false,
+      playParticles: false
     };
   }
 
@@ -33,7 +35,7 @@ class App extends React.Component {
       }
       this.setState({
         trophiesFused: this.state.trophiesFused.add(trophyId),
-        position: this.state.position < this.state.unfusedTrophies.length ? this.state.position + 1 : this.state.position
+        position: this.state.position < this.state.unfusedTrophies.length ? this.state.position + 1 : this.state.position,
       });
     }
   }
@@ -52,17 +54,7 @@ class App extends React.Component {
                   geometry={{primitive: 'box', depth: 0.2, height: 0.2, width: 0.2}}
                   material={{color: '#24CAFF'}}/>
         </Entity>
-                <Entity particle-system={{preset: 'snow', particleCount: 2000}}/>
-        <Entity text={{value: 'Hello, A-Frame React!', align: 'center'}} position={{x: 0, y: 2, z: -1}}/>
-
-    */
-    
-    return (
-      <Scene>
-        <a-assets>
-          <img id="groundTexture" src="material/sky.jpg"/>
-          <img id="skyTexture" src="material/sky.jpg"/>
-        </a-assets>
+                
 
         <Entity obj-model='obj: models/crowd-favorite.obj;'
                 material={{color: '#de7e00', opacity: 0}}
@@ -76,10 +68,43 @@ class App extends React.Component {
             <a-animation attribute="material.opacity" begin="fadeIn" to="100"></a-animation>
         </Entity>
 
-        { this.state.narrationInProgress ? 
-           <Entity particle-system={{preset: 'snow', particleCount: 2000}}/> 
-        : null }
+    */
+    
+    return (
+      <Scene>
+        <a-assets>
+          <img id="groundTexture" src="material/sky.jpg"/>
+          <img id="skyTexture" src="material/sky.jpg"/>
+        </a-assets>
 
+        { this.state.narrationInProgress ? 
+          <Entity particle-system={{preset: 'snow', particleCount: 2000}}/> 
+       : null }
+        <Entity 
+            text={{value: 'These trophies were made by the 2018 Emoticon Fellows! Focus on a trophy to hear its story.', align: 'center'}} 
+            position={{x: 0, y: 2, z: -1}}
+        />
+
+        <Entity 
+        text={{value: 'Begin', align: 'center'}} 
+        material={{color: '#fff'}}
+        position={{x: 0, y: 1.87, z: -1}}
+      />
+
+        <Entity
+          geometry="primitive: box; width: 0.2; height: 0.08; depth: 0.01;"
+          material="shader: flat; side: double; color: #271970; "
+          position={{x: 0, y: 1.9, z: -1.1}}
+          rotation="0 0 0"
+          scale="1 1 1"
+          grabbable
+          stretchable
+          dynamic-body
+        />
+
+
+
+        
         <Entity obj-model='obj: models/braintree.obj;'
             material={{color: '#00a0cc'}}
             className="unfused"
@@ -116,5 +141,6 @@ class App extends React.Component {
     );
   }
 }
+
 
 ReactDOM.render(<App/>, document.querySelector('#sceneContainer'));

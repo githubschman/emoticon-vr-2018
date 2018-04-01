@@ -1,5 +1,5 @@
 {
-  "name": "aframe-react-boilerplate",
+  "name": "emoticon-vr-2018",
   "version": "3.0.1",
   "description": "Boilerplate for building virtual reality experiences with A-Frame and React.",
   "dependencies": {
@@ -11,6 +11,7 @@
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-scripts": "0.9.5",
+    "react-vr": "^2.0.0",
     "react-vr-gaze-button": "^0.1.4"
   },
   "scripts": {
@@ -22,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ngokevin/aframe-react-boilerplate.git"
+    "url": "git+https://github.com/githubschman/emoticon-vr-2018.git"
   },
   "keywords": [
     "aframe",
@@ -40,7 +41,7 @@
   "bugs": {
     "url": "https://github.com/ngokevin/aframe-react-boilerplate/issues"
   },
-  "homepage": "https://github.com/ngokevin/aframe-react-boilerplate#readme",
+  "homepage": "https://github.com/githubschman/emoticon-vr-2018#readme",
   "devDependencies": {
     "gh-pages": "^0.12.0"
   }
