@@ -41,7 +41,7 @@
   "bugs": {
     "url": "https://github.com/ngokevin/aframe-react-boilerplate/issues"
   },
-  "homepage": "https://github.com/githubschman/emoticon-vr-2018#readme",
+  "homepage": "https://github.com/githubschman/emoticon-vr-2018",
   "devDependencies": {
     "gh-pages": "^0.12.0"
   }
