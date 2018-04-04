@@ -21,29 +21,42 @@ class App extends React.Component {
   }
 
   begin = () => {
+    this.emitBegin();
+    setTimeout(() => {
+      this.setState({experienceStarted: true})
+    }, 7000)
+  }
+
+  emitBegin = () => {
     setTimeout(() => {
       document.querySelector('#begin1').emit('begin');
       document.querySelector('#begin2').emit('begin');
       document.querySelector('#begin3').emit('begin');
-      this.setState({experienceStarted: true})
-    }, 5000)
+      document.querySelector('#begin4').emit('begin');
+    }, 2000);
   }
 
   fuseTrophy = (trophyId) => {
     if (!this.state.narrationInProgress) {
       let pos = this.state.position;
-      let i = 1;
       // PLAY TROPHY ID MUSIC (HAVE NARRATION IN PROGRESS TRUE, THEN FALSE, it will also EMIT PARTICLES)
 
-      if (!this.state.trophiesFused.has(this.state.unfusedTrophies[pos])) {
-        console.log('fading in ', this.state.unfusedTrophies[pos])
-        document.querySelector(`#${this.state.unfusedTrophies[pos]}`).emit('fadeIn');
-      }
-
-      this.setState({
-        trophiesFused: this.state.trophiesFused.add(trophyId),
-        position: this.state.position < this.state.unfusedTrophies.length ? this.state.position + 1 : this.state.position,
-      });
+      // then after timeout...
+      setTimeout(() => {
+        if (!this.state.trophiesFused.has(this.state.unfusedTrophies[pos]) && this.state.position < this.state.unfusedTrophies.length) {
+          console.log('fading in ', this.state.unfusedTrophies[pos]);
+          let trophy = document.querySelector(`#${this.state.unfusedTrophies[pos]}`);
+          trophy.emit('fadeIn');
+          setTimeout(() => {
+            console.log('now stay')
+            trophy.emit('nowStay');
+          }, 1000);
+          this.setState({
+            trophiesFused: this.state.trophiesFused.add(trophyId),
+            position: this.state.position < this.state.unfusedTrophies.length ? this.state.position + 1 : this.state.position,
+          });
+        }
+      }, 5000);
     }
   }
 
@@ -87,14 +100,17 @@ class App extends React.Component {
         { this.state.narrationInProgress ? 
           <Entity particle-system={{preset: 'snow', particleCount: 2000}}/> 
        : null }
-
+       { !this.state.experienceStarted ?  <a-image 
+        src="another-image.png"
+        id="begin4"
+        position={{x: 0, y: 2.1, z: -1}}></a-image> : null }
        { !this.state.experienceStarted ? 
           <Entity 
               id="begin1"
               text={{value: 'These trophies were made by the 2018 Emoticon Fellows! Focus on a trophy to hear its story.', align: 'center'}} 
               position={{x: 0, y: 2, z: -1}}
           >
-          <a-animation begin="begin" easing="ease-out" attribute="scale" dur="6000" fill="backwards" from="1 1 1" to="0 0 0"></a-animation>
+          <a-animation begin="begin" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="1 1 1" to="0 0 0"></a-animation>
           </Entity>
         :  null }
         { !this.state.experienceStarted ? 
@@ -104,7 +120,7 @@ class App extends React.Component {
             material={{color: '#fff'}}
             position={{x: 0, y: 1.87, z: -1}}
           >
-          <a-animation begin="begin" easing="ease-out" attribute="scale" dur="6000" fill="backwards" from="1 1 1" to="0 0 0"></a-animation>
+          <a-animation begin="begin" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="1 1 1" to="0 0 0"></a-animation>
           </Entity>
           
         :  null }
@@ -149,18 +165,19 @@ class App extends React.Component {
             to="-90 450 90"
             repeat="10">
           </a-animation>
-          <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.05 0.05 0.05"></a-animation>
         </Entity>
 
         <Entity obj-model='obj: models/camera.obj;'
           material={{color: '#de7e00'}}
+          position={{x: 12, y: 0, z: 10}}
           className="unfused"
           id="camera"
           scale="0 0 0" 
-          position={{x: 12, y: 0, z: 10}}
           rotation="-90 120 90"
-          events={{fusing: () => this.fuseTrophy('camera')}}>
+          events={{fusing: () => this.fuseTrophy('camera')}}
+          animation="property:rotation; startEvents:rotation-begin; pauseEvents: rotation-pause; resumeEvents: rotation-resume; to:0 360 0; dir:alternate; dur:10000; repeat:indefinite">
           <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="1 1 1" to="1 1 1"></a-animation>
         </Entity>
 
         <Entity primitive="a-plane" src="#groundTexture" rotation="-90 0 0" height="100" width="100"/>
