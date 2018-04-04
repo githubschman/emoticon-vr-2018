@@ -41,22 +41,32 @@ class App extends React.Component {
       let pos = this.state.position;
       // PLAY TROPHY ID MUSIC (HAVE NARRATION IN PROGRESS TRUE, THEN FALSE, it will also EMIT PARTICLES)
 
-      // then after timeout...
+      // currently hardcoded...
+      let audioDuration = 5000;
+
       setTimeout(() => {
         if (!this.state.trophiesFused.has(this.state.unfusedTrophies[pos]) && this.state.position < this.state.unfusedTrophies.length) {
           console.log('fading in ', this.state.unfusedTrophies[pos]);
           let trophy = document.querySelector(`#${this.state.unfusedTrophies[pos]}`);
+          let oldP = pos - 1;
+          let oldTrophy = oldP >= 0 ? document.querySelector(`#${this.state.unfusedTrophies[oldP]}`) : null;
           trophy.emit('fadeIn');
           setTimeout(() => {
             console.log('now stay')
             trophy.emit('nowStay');
+            // hide old trophy
+            if (oldTrophy !== null) {
+              console.log('bye', oldTrophy)
+              oldTrophy.parentNode.removeChild(oldTrophy);
+            }
+
           }, 1000);
           this.setState({
             trophiesFused: this.state.trophiesFused.add(trophyId),
             position: this.state.position < this.state.unfusedTrophies.length ? this.state.position + 1 : this.state.position,
           });
         }
-      }, 5000);
+      }, audioDuration);
     }
   }
 
@@ -144,7 +154,6 @@ class App extends React.Component {
           </Entity>
         :  null }
 
-
         
         <Entity obj-model='obj: models/braintree.obj;'
             material={{color: '#00a0cc'}}
@@ -154,17 +163,7 @@ class App extends React.Component {
             position={{x: 0, y: 0, z: 5}}
             rotation="-90 90 90"
             events={{fusing: () => this.fuseTrophy('braintree')}}>
-          <a-animation 
-            animationstart=""
-            direction="alternate-reverse"
-            begin="fusing" 
-            attribute="rotation" 
-            fill="both" 
-            easing="linear" 
-            dur="5000" 
-            to="-90 450 90"
-            repeat="10">
-          </a-animation>
+          <a-animation begin="fusing" direction="alternate-reverse" attribute="rotation"  fill="both"  easing="linear"  dur="5000" to="-90 450 90"></a-animation>
         </Entity>
 
         <Entity obj-model='obj: models/camera.obj;'
