@@ -15,7 +15,6 @@ class App extends React.Component {
       unfusedTrophies: ['braintree', 'camera'],
       position: 1,
       narrationInProgress: false,
-      playParticles: false,
       experienceStarted: false
     };
   }
@@ -32,7 +31,6 @@ class App extends React.Component {
       document.querySelector('#begin1').emit('begin');
       document.querySelector('#begin2').emit('begin');
       document.querySelector('#begin3').emit('begin');
-      document.querySelector('#begin4').emit('begin');
     }, 2000);
   }
 
@@ -40,19 +38,20 @@ class App extends React.Component {
     if (!this.state.narrationInProgress) {
       let pos = this.state.position;
       // PLAY TROPHY ID MUSIC (HAVE NARRATION IN PROGRESS TRUE, THEN FALSE, it will also EMIT PARTICLES)
+      // DON'T FORGET ABOUT narrationInProgress
 
       // currently hardcoded...
-      let audioDuration = 5000;
+      let audioDuration = 3000;
+      this.setState({narrationInProgress: true})
+      
 
       setTimeout(() => {
         if (!this.state.trophiesFused.has(this.state.unfusedTrophies[pos]) && this.state.position < this.state.unfusedTrophies.length) {
-          console.log('fading in ', this.state.unfusedTrophies[pos]);
           let trophy = document.querySelector(`#${this.state.unfusedTrophies[pos]}`);
           let oldP = pos - 1;
           let oldTrophy = oldP >= 0 ? document.querySelector(`#${this.state.unfusedTrophies[oldP]}`) : null;
           trophy.emit('fadeIn');
           setTimeout(() => {
-            console.log('now stay')
             trophy.emit('nowStay');
             // hide old trophy
             if (oldTrophy !== null) {
@@ -62,7 +61,9 @@ class App extends React.Component {
 
           }, 1000);
           this.setState({
+            experienceStarted: true,
             trophiesFused: this.state.trophiesFused.add(trophyId),
+            narrationInProgress: false,
             position: this.state.position < this.state.unfusedTrophies.length ? this.state.position + 1 : this.state.position,
           });
         }
@@ -105,15 +106,13 @@ class App extends React.Component {
         <a-assets>
           <img id="groundTexture" src="material/sky.jpg"/>
           <img id="skyTexture" src="material/sky.jpg"/>
+          <img id="logo" src="material/emoti-con_logo.png"/>
         </a-assets>
 
         { this.state.narrationInProgress ? 
           <Entity particle-system={{preset: 'snow', particleCount: 2000}}/> 
        : null }
-       { !this.state.experienceStarted ?  <a-image 
-        src="another-image.png"
-        id="begin4"
-        position={{x: 0, y: 2.1, z: -1}}></a-image> : null }
+
        { !this.state.experienceStarted ? 
           <Entity 
               id="begin1"
@@ -168,13 +167,14 @@ class App extends React.Component {
 
         <Entity obj-model='obj: models/camera.obj;'
           material={{color: '#de7e00'}}
-          position={{x: 12, y: 0, z: 10}}
+          position={{x: 11, y: 0, z: -5}}
           className="unfused"
           id="camera"
           scale="0 0 0" 
-          rotation="-90 120 90"
+          rotation="-90 -90 -350"
           events={{fusing: () => this.fuseTrophy('camera')}}
-          animation="property:rotation; startEvents:rotation-begin; pauseEvents: rotation-pause; resumeEvents: rotation-resume; to:0 360 0; dir:alternate; dur:10000; repeat:indefinite">
+          >
+          <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="1 1 1" to="1 1 1"></a-animation>
           <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="1 1 1" to="1 1 1"></a-animation>
         </Entity>
