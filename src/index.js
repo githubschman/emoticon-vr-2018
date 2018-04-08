@@ -12,11 +12,16 @@ class App extends React.Component {
     super(props);
     this.state = {
       trophiesFused: new Set(),
-      unfusedTrophies: ['braintree', 'camera', 'cat'],
+      unfusedTrophies: ['braintree', 'camera', 'cat', 'nothing'],
       position: 1,
       narrationInProgress: false,
-      experienceStarted: false
+      experienceStarted: false,
+      backgroundMusic: false
     };
+  }
+
+  componentDidMount() {
+    this.setState({backgroundMusic: true});
   }
 
   begin = () => {
@@ -31,6 +36,7 @@ class App extends React.Component {
       document.querySelector('#begin1').emit('begin');
       document.querySelector('#begin2').emit('begin');
       document.querySelector('#begin3').emit('begin');
+      document.querySelector('#begin4').emit('begin');
     }, 2000);
   }
 
@@ -152,6 +158,19 @@ class App extends React.Component {
           </Entity>
         :  null }
 
+        { !this.state.experienceStarted ? 
+          <Entity id="begin4" primitive="a-plane" src="#logo" rotation="180 180 180" height="1" width="1" position="0 4 -4">
+            <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="2000" fill="forwards" from="1 1 1" to="1.01 1.01 1.01"></a-animation>
+            <a-animation begin="begin" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="1 1 1" to="0 0 0"></a-animation>
+          </Entity>
+        : null }
+
+        { this.state.backgroundMusic ? 
+          <audio autoPlay loop>
+            <source src="/music/background.mp3" type="audio/mpeg" />
+          </audio> 
+        : null }
+
         
         <Entity obj-model='obj: models/braintree.obj;'
             material={{color: '#00a0cc'}}
@@ -173,9 +192,23 @@ class App extends React.Component {
           rotation="-90 -90 -350"
           events={{fusing: () => this.fuseTrophy('camera')}}
           >
-          <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.15 0.15 0.15" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="1 1 1" to="1 1 1"></a-animation>
+        </Entity>
+        
+        <Entity obj-model='obj: models/cat.obj;'
+          material={{color: '#00a0cc'}}
+          position={{x: 0, y: 1, z: 7}}
+          className="unfused"
+          id="cat"
+          scale="0 0 0" 
+          rotation="-90 90 -90"
+          events={{fusing: () => this.fuseTrophy('cat')}}
+        >
+        <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.15 0.15 0.15" to="0.1 0.1 0.1"></a-animation>
+        <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
+        <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
         </Entity>
 
         <Entity primitive="a-plane" src="#groundTexture" rotation="-90 0 0" height="100" width="100"/>
@@ -197,16 +230,6 @@ class App extends React.Component {
 ReactDOM.render(<App/>, document.querySelector('#sceneContainer'));
 
 
-/*       <Entity obj-model='obj: models/cat.obj;'
-        material={{color: '#00a0cc'}}
-        position={{x: 0, y: 0, z: 5}}
-        className="unfused"
-        id="cat"
-        scale="0 0 0" 
-        rotation="-90 90 -90"
-        events={{fusing: () => this.fuseTrophy('cat')}}
-        >
-        <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
-        <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
-      </Entity>
+/*       
+
  */
