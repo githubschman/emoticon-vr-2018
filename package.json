@@ -12,7 +12,8 @@
     "react-dom": "^15.4.1",
     "react-scripts": "0.9.5",
     "react-vr": "^2.0.0",
-    "react-vr-gaze-button": "^0.1.4"
+    "react-vr-gaze-button": "^0.1.4",
+    "web-audio-touch-unlock": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

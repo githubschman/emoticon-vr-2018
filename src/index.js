@@ -4,8 +4,11 @@ import 'aframe-particle-system-component';
 import 'babel-polyfill';
 import { Entity, Scene } from 'aframe-react';
 import React from 'react';
-
 import ReactDOM from 'react-dom';
+
+import webAudioTouchUnlock from 'web-audio-touch-unlock';
+const context = new (window.AudioContext || window.webkitAudioContext)();
+
 
 class App extends React.Component {
   constructor(props) {
@@ -30,8 +33,15 @@ class App extends React.Component {
   }
 
   emitBegin = () => {
-    let sound = document.querySelector('#backgroundAudio');
-    sound.play();
+
+    webAudioTouchUnlock(context)
+    .then(function (unlocked) {
+      let sound = document.querySelector('#backgroundAudio');
+      sound.play();
+    }, function(err) {
+        console.error(err);
+    });
+  
     setTimeout(() => {
       document.querySelector('#begin1').emit('begin');
       document.querySelector('#begin2').emit('begin');
@@ -47,7 +57,7 @@ class App extends React.Component {
       // DON'T FORGET ABOUT narrationInProgress
 
       // currently hardcoded...
-      let audioDuration = 3000;
+      let audioDuration = 10000;
       this.setState({narrationInProgress: true})
       
 
@@ -61,7 +71,8 @@ class App extends React.Component {
             trophy.emit('nowStay');
             // hide old trophy
             if (oldTrophy !== null) {
-              oldTrophy.parentNode.removeChild(oldTrophy);
+              // oldTrophy.parentNode.removeChild(oldTrophy);
+              oldTrophy.emit('bye');
             }
 
           }, 1000);
@@ -78,20 +89,7 @@ class App extends React.Component {
 
   render () {
 
-    /* Entity Graveyard
-        <Entity id="box"
-          class="unfused"
-          geometry={{primitive: 'box'}}
-          material={{color: this.state.color, opacity: 0.6}}
-          animation__scale={{property: 'scale', dir: 'alternate', dur: 100, loop: true, to: '1.1 1.1 1.1'}}
-          position={{x: 0, y: 1, z: -3}}
-          events={{fusing: this.fuseTrophy.bind(this)}}>
-          <Entity animation__scale={{property: 'scale', dir: 'alternate', dur: 100, loop: true, to: '2 2 2'}}
-                  geometry={{primitive: 'box', depth: 0.2, height: 0.2, width: 0.2}}
-                  material={{color: '#24CAFF'}}/>
-        </Entity>
-                
-
+    /* 
         <Entity obj-model='obj: models/crowd-favorite.obj;'
                 material={{color: '#de7e00', opacity: 0}}
                 className="unfused"
@@ -103,7 +101,6 @@ class App extends React.Component {
             <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.05 0.05 0.05"></a-animation>
             <a-animation attribute="material.opacity" begin="fadeIn" to="100"></a-animation>
         </Entity>
-
     */
     
     return (
@@ -178,6 +175,7 @@ class App extends React.Component {
             rotation="-90 90 90"
             events={{fusing: () => this.fuseTrophy('braintree')}}>
           <a-animation begin="fusing" direction="alternate-reverse" attribute="rotation"  fill="both"  easing="linear"  dur="5000" to="-90 450 90"></a-animation>
+          <a-animation begin="bye" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
         </Entity>
 
         <Entity obj-model='obj: models/camera.obj;'
@@ -192,6 +190,7 @@ class App extends React.Component {
           <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.15 0.15 0.15" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="1 1 1" to="1 1 1"></a-animation>
+          <a-animation begin="bye" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
         </Entity>
         
         <Entity obj-model='obj: models/cat.obj;'
@@ -203,9 +202,10 @@ class App extends React.Component {
           rotation="-90 90 -90"
           events={{fusing: () => this.fuseTrophy('cat')}}
         >
-        <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.15 0.15 0.15" to="0.1 0.1 0.1"></a-animation>
-        <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
-        <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.15 0.15 0.15" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="bye" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
         </Entity>
 
         <Entity primitive="a-plane" src="#groundTexture" rotation="-90 0 0" height="100" width="100"/>
@@ -225,8 +225,3 @@ class App extends React.Component {
 
 
 ReactDOM.render(<App/>, document.querySelector('#sceneContainer'));
-
-
-/*       
-
- */
