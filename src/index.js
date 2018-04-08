@@ -38,6 +38,7 @@ class App extends React.Component {
     .then(function (unlocked) {
       let sound = document.querySelector('#backgroundAudio');
       sound.play();
+      console.log('sound')
     }, function(err) {
         console.error(err);
     });
