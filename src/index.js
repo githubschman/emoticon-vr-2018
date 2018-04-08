@@ -167,7 +167,7 @@ class App extends React.Component {
 
         { this.state.backgroundMusic ? 
           <audio autoPlay loop>
-            <source src="/music/background.mp3" type="audio/mpeg" />
+            <source src="music/background.mp3" type="audio/mpeg" />
           </audio> 
         : null }
 
