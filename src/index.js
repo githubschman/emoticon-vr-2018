@@ -72,8 +72,7 @@ class App extends React.Component {
             trophy.emit('nowStay');
             // hide old trophy
             if (oldTrophy !== null) {
-              // oldTrophy.parentNode.removeChild(oldTrophy);
-              oldTrophy.emit('bye');
+              oldTrophy.parentNode.removeChild(oldTrophy);
             }
 
           }, 1000);
@@ -119,7 +118,7 @@ class App extends React.Component {
        { !this.state.experienceStarted ? 
           <Entity 
               id="begin1"
-              text={{value: 'These trophies were made by the 2018 Emoticon Fellows! Focus on a trophy to hear its story.', align: 'center'}} 
+              text={{value: 'These trophies were made by the 2018 Emoticon Fellows! Tap here with your finger to turn on sound and focus on a trophy to hear its story.', align: 'center'}} 
               position={{x: 0, y: 2, z: -1}}
           >
           <a-animation begin="begin" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="1 1 1" to="0 0 0"></a-animation>
@@ -176,7 +175,6 @@ class App extends React.Component {
             rotation="-90 90 90"
             events={{fusing: () => this.fuseTrophy('braintree')}}>
           <a-animation begin="fusing" direction="alternate-reverse" attribute="rotation"  fill="both"  easing="linear"  dur="5000" to="-90 450 90"></a-animation>
-          <a-animation begin="bye" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
         </Entity>
 
         <Entity obj-model='obj: models/camera.obj;'
@@ -206,7 +204,6 @@ class App extends React.Component {
           <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.15 0.15 0.15" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
-          <a-animation begin="bye" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
         </Entity>
 
         <Entity primitive="a-plane" src="#groundTexture" rotation="-90 0 0" height="100" width="100"/>
