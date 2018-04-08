@@ -16,22 +16,22 @@ class App extends React.Component {
       position: 1,
       narrationInProgress: false,
       experienceStarted: false,
-      backgroundMusic: false
     };
   }
 
-  componentDidMount() {
-    this.setState({backgroundMusic: true});
-  }
+  componentDidMount() { }
 
   begin = () => {
     this.emitBegin();
+
     setTimeout(() => {
       this.setState({experienceStarted: true})
     }, 7000)
   }
 
   emitBegin = () => {
+    let sound = document.querySelector('#backgroundAudio');
+    sound.play();
     setTimeout(() => {
       document.querySelector('#begin1').emit('begin');
       document.querySelector('#begin2').emit('begin');
@@ -41,7 +41,7 @@ class App extends React.Component {
   }
 
   fuseTrophy = (trophyId) => {
-    if (!this.state.narrationInProgress) {
+    if (!this.state.narrationInProgress && this.state.experienceStarted) {
       let pos = this.state.position;
       // PLAY TROPHY ID MUSIC (HAVE NARRATION IN PROGRESS TRUE, THEN FALSE, it will also EMIT PARTICLES)
       // DON'T FORGET ABOUT narrationInProgress
@@ -165,12 +165,9 @@ class App extends React.Component {
           </Entity>
         : null }
 
-        { this.state.backgroundMusic ? 
-          <audio autoPlay loop>
-            <source src="music/background.mp3" type="audio/mpeg" />
-          </audio> 
-        : null }
-
+        <audio id="backgroundAudio" loop>
+          <source src="music/background.mp3" type="audio/mpeg" />
+        </audio> 
         
         <Entity obj-model='obj: models/braintree.obj;'
             material={{color: '#00a0cc'}}
