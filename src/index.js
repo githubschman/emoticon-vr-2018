@@ -12,7 +12,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       trophiesFused: new Set(),
-      unfusedTrophies: ['braintree', 'camera'],
+      unfusedTrophies: ['braintree', 'camera', 'cat'],
       position: 1,
       narrationInProgress: false,
       experienceStarted: false
@@ -55,7 +55,6 @@ class App extends React.Component {
             trophy.emit('nowStay');
             // hide old trophy
             if (oldTrophy !== null) {
-              console.log('bye', oldTrophy)
               oldTrophy.parentNode.removeChild(oldTrophy);
             }
 
@@ -174,7 +173,7 @@ class App extends React.Component {
           rotation="-90 -90 -350"
           events={{fusing: () => this.fuseTrophy('camera')}}
           >
-          <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="1 1 1" to="1 1 1"></a-animation>
+          <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="1 1 1" to="1 1 1"></a-animation>
         </Entity>
@@ -196,3 +195,18 @@ class App extends React.Component {
 
 
 ReactDOM.render(<App/>, document.querySelector('#sceneContainer'));
+
+
+/*       <Entity obj-model='obj: models/cat.obj;'
+        material={{color: '#00a0cc'}}
+        position={{x: 0, y: 0, z: 5}}
+        className="unfused"
+        id="cat"
+        scale="0 0 0" 
+        rotation="-90 90 -90"
+        events={{fusing: () => this.fuseTrophy('cat')}}
+        >
+        <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
+        <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
+      </Entity>
+ */
