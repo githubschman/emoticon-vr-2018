@@ -155,7 +155,7 @@ class App extends React.Component {
 
         
         <Entity obj-model='obj: models/braintree.obj;'
-            material={{color: '#00a0cc'}}
+            material={{color: '#F0D0C8'}}
             className="unfused"
             id="braintree"
             scale="0.1 0.1 0.1" 
@@ -167,7 +167,7 @@ class App extends React.Component {
 
                 
         <Entity obj-model='obj: models/rooted-memories.obj;'
-            material={{color: '#00a0cc'}}
+            material={{color: '#BE81AF'}}
             className="unfused"
             id="rooted-memories"
             scale="0.1 0.1 0.1" 
@@ -181,7 +181,7 @@ class App extends React.Component {
         </Entity>
 
         <Entity obj-model='obj: models/crowd-favorite.obj;'
-          material={{color: '#de7e00', opacity: 0}}
+          material={{color: '#DBB964', opacity: 0}}
           id="crowd-favorite"
           scale="0.1 0.1 0.1" 
           position={{x: 0, y: -1, z: -5}}
@@ -193,7 +193,7 @@ class App extends React.Component {
 
 
         <Entity obj-model='obj: models/camera.obj;'
-          material={{color: '#de7e00'}}
+          material={{color: '#947BBA'}}
           position={{x: 11, y: 0, z: -5}}
           className="unfused"
           id="camera"
@@ -208,7 +208,7 @@ class App extends React.Component {
         </Entity>
         
         <Entity obj-model='obj: models/polaroid.obj;'
-          material={{color: '#de7e00'}}
+          material={{color: '#EFB9AC'}}
           position={{x: 0, y: 5, z: -15}}
           className="unfused"
           id="polaroid"
@@ -223,7 +223,7 @@ class App extends React.Component {
         </Entity>
 
         <Entity obj-model='obj: models/rootedmemories.obj;'
-          material={{color: '#de7e00'}}
+          material={{color: '#F0D0C8'}}
           position={{x: 10, y: 0, z: 0}}
           className="unfused"
           id="rootedmemories"
@@ -239,7 +239,7 @@ class App extends React.Component {
         
 
         <Entity obj-model='obj: models/gears.obj;'
-          material={{color: '#de7e00'}}
+          material={{color: '#BE81AF'}}
           position={{x: 0, y: 5, z: -10}}
           className="unfused"
           id="gears"
@@ -254,7 +254,7 @@ class App extends React.Component {
         </Entity>
 
         <Entity obj-model='obj: models/cat.obj;'
-          material={{color: '#00a0cc'}}
+          material={{color: '#BEC13D'}}
           position={{x: 0, y: 1, z: 7}}
           className="unfused"
           id="cat"
@@ -269,7 +269,7 @@ class App extends React.Component {
 
            
         <Entity obj-model='obj: models/clock.obj;'
-          material={{color: '#de7e00'}}
+          material={{color: '#947BBA'}}
           position={{x: 0, y: 1, z: 10}}
           className="unfused"
           id="clock"
@@ -283,7 +283,7 @@ class App extends React.Component {
         </Entity>
 
         <Entity obj-model='obj: models/sunshine.obj;'
-          material={{color: '#00a0cc'}}
+          material={{color: '#EFB9AC'}}
           position={{x: 0, y: 1, z: 5}}
           className="unfused"
           id="sunshine"
@@ -298,7 +298,7 @@ class App extends React.Component {
 
         <Entity primitive="a-plane" src="#groundTexture" rotation="-90 0 0" height="100" width="100"/>
         <Entity primitive="a-light" type="ambient" color="#445451"/>
-        <Entity primitive="a-light" type="point" intensity="2" position="2 4 4"/>
+        <Entity primitive="a-light" type="point" intensity="1" position="2 4 4"/>
         <Entity primitive="a-sky" height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"/>
 
         <Entity primitive="a-camera">
