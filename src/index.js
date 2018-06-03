@@ -15,7 +15,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       trophiesFused: new Set(),
-      unfusedTrophies: ['braintree', 'gears', 'sunshine', 'cat', 'clock', 'camera', ''], // roots, rocket, polaroid, c-fave
+      unfusedTrophies: ['braintree', 'gears', 'sunshine', 'clock', 'cat', 'polaroid', 'rootedmemories', 'camera', 'crowd-favorite', ''], //
       position: 1,
       narrationInProgress: false,
       experienceStarted: false,
@@ -89,20 +89,6 @@ class App extends React.Component {
   }
 
   render () {
-
-    /* 
-        <Entity obj-model='obj: models/crowd-favorite.obj;'
-                material={{color: '#de7e00', opacity: 0}}
-                className="unfused"
-                id="crowdfave"
-                scale="0.05 0.05 0.05" 
-                position={{x: 0, y: 0, z: -5}}
-                rotation="-90 0 0"
-                events={{fusing: this.fuseTrophy.bind(this)}}>
-            <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.05 0.05 0.05"></a-animation>
-            <a-animation attribute="material.opacity" begin="fadeIn" to="100"></a-animation>
-        </Entity>
-    */
     
     return (
       <Scene>
@@ -179,6 +165,33 @@ class App extends React.Component {
           <a-animation begin="fusing" direction="alternate-reverse" attribute="rotation"  fill="both"  easing="linear"  dur="5000" to="-90 450 90"></a-animation>
         </Entity>
 
+                
+        <Entity obj-model='obj: models/rooted-memories.obj;'
+            material={{color: '#00a0cc'}}
+            className="unfused"
+            id="rooted-memories"
+            scale="0.1 0.1 0.1" 
+            position={{x: 0, y: 0, z: 5}}
+            rotation="-90 90 90"
+            events={{fusing: () => this.fuseTrophy('rooted-memories')}}>
+          <a-animation begin="fusing" direction="alternate-reverse" attribute="rotation"  fill="both"  easing="linear"  dur="5000" to="-90 450 90"></a-animation>
+          <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="1 1 1" to="1 1 1"></a-animation>
+          <a-animation begin="bye" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
+        </Entity>
+
+        <Entity obj-model='obj: models/crowd-favorite.obj;'
+          material={{color: '#de7e00', opacity: 0}}
+          id="crowd-favorite"
+          scale="0.1 0.1 0.1" 
+          position={{x: 0, y: -1, z: -5}}
+          rotation="-90 0 0"
+          events={{fusing: () => this.fuseTrophy('crowd-favorite')}}
+          >
+          <a-animation attribute="material.opacity" begin="fadeIn" to="100"></a-animation>
+        </Entity>
+
+
         <Entity obj-model='obj: models/camera.obj;'
           material={{color: '#de7e00'}}
           position={{x: 11, y: 0, z: -5}}
@@ -190,14 +203,44 @@ class App extends React.Component {
           >
           <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.15 0.15 0.15" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
-          <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="1 1 1" to="1 1 1"></a-animation>
+          <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from=".1 .1 .1" to=".1 .1 .1"></a-animation>
+          <a-animation begin="bye" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
+        </Entity>
+        
+        <Entity obj-model='obj: models/polaroid.obj;'
+          material={{color: '#de7e00'}}
+          position={{x: 0, y: 5, z: -15}}
+          className="unfused"
+          id="polaroid"
+          scale="0 0 0" 
+          rotation="180 180 -90"
+          events={{fusing: () => this.fuseTrophy('polaroid')}}
+          >
+          <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.15 0.15 0.15" to="0.3 0.3 0.3"></a-animation>
+          <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from=".3 .3 .3" to=".3 .3 .3"></a-animation>
+          <a-animation begin="bye" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
+        </Entity>
+
+        <Entity obj-model='obj: models/rootedmemories.obj;'
+          material={{color: '#de7e00'}}
+          position={{x: 10, y: 0, z: 0}}
+          className="unfused"
+          id="rootedmemories"
+          scale="0 0 0" 
+          rotation="-90 -90 -350"
+          events={{fusing: () => this.fuseTrophy('rootedmemories')}}
+          >
+          <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.15 0.15 0.15" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="bye" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
         </Entity>
         
 
         <Entity obj-model='obj: models/gears.obj;'
           material={{color: '#de7e00'}}
-          position={{x: 0, y: 5, z: -15}}
+          position={{x: 0, y: 5, z: -10}}
           className="unfused"
           id="gears"
           scale="0 0 0" 
@@ -206,7 +249,7 @@ class App extends React.Component {
           >
           <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
-          <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="1 1 1" to="1 1 1"></a-animation>
+          <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="bye" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
         </Entity>
 
@@ -227,12 +270,26 @@ class App extends React.Component {
            
         <Entity obj-model='obj: models/clock.obj;'
           material={{color: '#de7e00'}}
-          position={{x: 0, y: 1, z: 7}}
+          position={{x: 0, y: 1, z: 10}}
           className="unfused"
           id="clock"
           scale="0 0 0" 
           rotation="-90 90 -90"
           events={{fusing: () => this.fuseTrophy('clock')}}
+        >
+          <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.15 0.15 0.15" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
+        </Entity>
+
+        <Entity obj-model='obj: models/sunshine.obj;'
+          material={{color: '#00a0cc'}}
+          position={{x: 0, y: 1, z: 5}}
+          className="unfused"
+          id="sunshine"
+          scale="0 0 0" 
+          rotation="-90 90 -90"
+          events={{fusing: () => this.fuseTrophy('sunshine')}}
         >
           <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.15 0.15 0.15" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
