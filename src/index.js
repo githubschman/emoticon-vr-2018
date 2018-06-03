@@ -15,7 +15,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       trophiesFused: new Set(),
-      unfusedTrophies: ['braintree', 'camera', 'cat', 'nothing'],
+      unfusedTrophies: ['braintree', 'gears', 'sunshine', 'cat', 'clock', 'camera', ''], // roots, rocket, polaroid, c-fave
       position: 1,
       narrationInProgress: false,
       experienceStarted: false,
@@ -52,6 +52,7 @@ class App extends React.Component {
   }
 
   fuseTrophy = (trophyId) => {
+    console.log('fusing', trophyId);
     if (!this.state.narrationInProgress && this.state.experienceStarted) {
       let pos = this.state.position;
       // PLAY TROPHY ID MUSIC (HAVE NARRATION IN PROGRESS TRUE, THEN FALSE, it will also EMIT PARTICLES)
@@ -118,7 +119,7 @@ class App extends React.Component {
        { !this.state.experienceStarted ? 
           <Entity 
               id="begin1"
-              text={{value: 'These trophies were made by the 2018 Emoticon Fellows! Tap here with your finger to turn on sound and focus on a trophy to hear its story.', align: 'center'}} 
+              text={{value: 'These trophies were made by the 2018 Emoticon fellows! Tap here with your finger to turn on sound and focus on a trophy to see it animate.', align: 'center'}} 
               position={{x: 0, y: 2, z: -1}}
           >
           <a-animation begin="begin" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="1 1 1" to="0 0 0"></a-animation>
@@ -165,6 +166,7 @@ class App extends React.Component {
         <audio id="backgroundAudio" loop>
           <source src="music/background.mp3" type="audio/mpeg" />
         </audio> 
+
         
         <Entity obj-model='obj: models/braintree.obj;'
             material={{color: '#00a0cc'}}
@@ -192,6 +194,22 @@ class App extends React.Component {
           <a-animation begin="bye" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
         </Entity>
         
+
+        <Entity obj-model='obj: models/gears.obj;'
+          material={{color: '#de7e00'}}
+          position={{x: 0, y: 5, z: -15}}
+          className="unfused"
+          id="gears"
+          scale="0 0 0" 
+          rotation="180 180 180"
+          events={{fusing: () => this.fuseTrophy('gears')}}
+          >
+          <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="1 1 1" to="1 1 1"></a-animation>
+          <a-animation begin="bye" easing="ease-out" attribute="scale" dur="5000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
+        </Entity>
+
         <Entity obj-model='obj: models/cat.obj;'
           material={{color: '#00a0cc'}}
           position={{x: 0, y: 1, z: 7}}
@@ -200,6 +218,21 @@ class App extends React.Component {
           scale="0 0 0" 
           rotation="-90 90 -90"
           events={{fusing: () => this.fuseTrophy('cat')}}
+        >
+          <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.15 0.15 0.15" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
+          <a-animation begin="nowStay" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.1 0.1 0.1" to="0.1 0.1 0.1"></a-animation>
+        </Entity>
+
+           
+        <Entity obj-model='obj: models/clock.obj;'
+          material={{color: '#de7e00'}}
+          position={{x: 0, y: 1, z: 7}}
+          className="unfused"
+          id="clock"
+          scale="0 0 0" 
+          rotation="-90 90 -90"
+          events={{fusing: () => this.fuseTrophy('clock')}}
         >
           <a-animation begin="fusing" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0.15 0.15 0.15" to="0.1 0.1 0.1"></a-animation>
           <a-animation begin="fadeIn" easing="ease-in" attribute="scale" dur="1000" fill="backwards" from="0 0 0" to="0.1 0.1 0.1"></a-animation>
